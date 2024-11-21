@@ -27,6 +27,7 @@ jobs:
         uses: php-actions/composer@v6
         with:
           dev: no
+          args: "--optimize-autoloader"
         
       - uses: paulhatch/semantic-version@v5.0.2
         id: version
@@ -53,6 +54,6 @@ jobs:
           prerelease: true
           name: Release ${{ steps.version.outputs.version }}
           tag: ${{ steps.version.outputs.version }}
-          artifacts: application.zip
+          artifacts: filemanager-${{ steps.version.outputs.version }}.zip
           artifactContentType: application/zip
           bodyFile: RELEASE_NOTE.md
