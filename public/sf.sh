@@ -3,7 +3,7 @@
 # export SIMPLE_FILEMANAGER_AUTH_TOKEN=0314e4dd5031799beb52a24e6521e38204c75be01f64794c96a9af11ec47e61a
 # export SIMPLE_FILEMANAGER_DOMAIN=http://localhost:8080
 cat << "EOF"
-    ___  _  _                                                          
+   ___  _  _                                                          
   / __\(_)| |  ___  _ __ ___    __ _  _ __    __ _   __ _   ___  _ __ 
  / _\  | || | / _ \| '_ ` _ \  / _` || '_ \  / _` | / _` | / _ \| '__|
 / /    | || ||  __/| | | | | || (_| || | | || (_| || (_| ||  __/| |   
