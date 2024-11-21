@@ -24,8 +24,14 @@ class AdminController extends AbstractController
         $this->filesystem = new Filesystem();
     }
 
+    #[Route('/', name: 'app_start')]
+    public function start(): Response
+    {
+        return $this->redirectToRoute('app_dashboard');
+    }
+
     #[Route('/filemanager', name: 'app_dashboard')]
-    public function index(): Response
+    public function dashboard(): Response
     {
         $user = $this->getUser();
         $data = $this->fileRepository->findFilesByEmail($user->getEmail());
