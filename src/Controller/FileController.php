@@ -40,6 +40,7 @@ class FileController extends AbstractController
         $title = $request->request->get('title');
         $description = $request->request->get('description');
         $permission = $request->request->get('permission');
+        $expireAfter = $request->request->get('expire');
         $fileContent = $request->files->get('file');
 
         if ($fileContent instanceof UploadedFile) {
@@ -53,6 +54,7 @@ class FileController extends AbstractController
             $File->setTitle($title);
             $File->setDescription($description);
             $File->setPermission($permission);
+            $File->setExpireAfter($expireAfter);
             $File->setCreatedAt(new \DateTimeImmutable());
             $File->setFileId($newFilename);
             $File->setFileName($fileName);
