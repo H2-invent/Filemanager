@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+{% block content %}
+    {% macro showValue(value) %}
+        {% if value is iterable %}
+            <ul class="list-group">
+                {% for v in value %}
+                    <li class="list-group-item">
+                        {{ _self.showValue(v) }}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            {{ value }}
+        {% endif %}
+    {% endmacro %}
+
+    <section class="mb-4">
+        <div class="card">
+            <div class="card-header text-center py-3">
+                <h5 class="mb-0 text-center">
+                    <strong>Bereitgestellte Downloads für {{ app.user.firstname }} {{ app.user.lastname }}</strong>
+                </h5>
+            </div>
+
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover text-nowrap">
+                        <thead>
+                        <tr>
+                            <th scope="col">Titel</th>
+                            <th scope="col">Beschreibung</th>
+                            <th scope="col">Datum</th>
+                            <th scope="col">Download</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for d in data %}
+                            <tr>
+
+                                <td>{{ d.title }}</td>
+                                <td>{{ d.description }}</td>
+                                <td>{{ d.createdAt|date('d.m.Y H:i') }}</td>
+                                <td><a href={{path('app_dashboard_download',{'id':d.fileId})}}>{{d.fileName}}</a></td>
+                            </tr>
+                        {% endfor %}
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
+{% block script %}
+<script>
+    $(document).ready( function () {
+        $('#datatable').DataTable(
+            {order: [[1, 'desc']]}
+        );
+    } );
+</script>
+{% endblock %}

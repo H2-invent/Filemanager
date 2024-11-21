@@ -1,0 +1,33 @@
+imports:
+    # Import Keycloak security providers
+    - { resource: '@IDCIKeycloakSecurityBundle/Resources/config/security.yaml' }
+
+security:
+
+    enable_authenticator_manager: true
+    firewalls:
+
+        # This route create the OAuth 2 "User Authorization Request" and must be accessible for unauthenticated users
+        auth_connect:
+            pattern: /auth/connect/keycloak
+            security: false
+
+
+
+        # Here is an example to protect your application (UI) using OAuth 2 Authorization Code Flow
+        secured_area:
+            pattern: ^/
+            provider: idci_keycloak_security_provider
+            entry_point: IDCI\Bundle\KeycloakSecurityBundle\Security\EntryPoint\AuthenticationEntryPoint
+            custom_authenticators:
+                - IDCI\Bundle\KeycloakSecurityBundle\Security\Authenticator\KeycloakAuthenticator
+            logout:
+                path: idci_keycloak_security_auth_logout
+
+    role_hierarchy:
+        ROLE_ADMIN: ROLE_USER
+
+    access_control:
+        # This following ROLES must be configured in your Keycloak client
+        - { path: ^/filemanager/upload, roles: PUBLIC_ACCESS }
+        - { path: ^/filemanager, roles: IS_AUTHENTICATED_FULLY }

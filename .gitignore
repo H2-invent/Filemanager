@@ -1,0 +1,12 @@
+.idea
+
+.env.local
+
+var/*
+
+# Exclude data directory
+/data/*
+
+vendor/
+
+node_module/
