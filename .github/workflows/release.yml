@@ -51,7 +51,7 @@ jobs:
         id: create_release
         with:
           draft: false
-          prerelease: true
+          prerelease: false
           name: Release ${{ steps.version.outputs.version }}
           tag: ${{ steps.version.outputs.version }}
           artifacts: filemanager-${{ steps.version.outputs.version }}.zip
