@@ -22,10 +22,9 @@ jobs:
           php-version: 8.3
           ini-values: date.timezone ="Europe/Berlin"
           extensions: gd,intl,mbstring
-          tools: composer:v2
 
-      - name: Run composer Install
-        run: composer install
+      - name: Install dependencies
+        uses: php-actions/composer@v6
         
       - uses: paulhatch/semantic-version@v5.0.2
         id: version
