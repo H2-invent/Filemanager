@@ -11,14 +11,17 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Filesystem\Filesystem;
 
 class AdminController extends AbstractController
 {
     public function __construct(
         private EntityManagerInterface  $entityManager,
+        private Filesystem $filesystem,
         private FileRepository $fileRepository,
     )
     {
+        $this->filesystem = new Filesystem();
     }
 
     #[Route('/filemanager', name: 'app_dashboard')]
@@ -56,6 +59,28 @@ class AdminController extends AbstractController
         $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $file->getFileName());
 
         return $response;
- }
+    }
+
+    #[Route('/filemanager/delete/{id}', name: 'app_dashboard_delete')]
+    public function deleteAction($id)
+    {
+
+    $file = $this->fileRepository->findOneBy(
+            array(
+                'fileId' => $id,
+                'permission' => $this->getUser()->getEmail()
+            )
+    );
+
+    $filePath = $this->getParameter('upload_directory') . '/' . $file->getFileId();
+
+        if ($this->filesystem->exists($filePath)) {
+            $this->filesystem->remove($filePath);
+        }
+
+        $this->entityManager->remove($file);
+        $this->entityManager->flush();
+        return $this->redirectToRoute('app_dashboard');
+    }
 
 }
