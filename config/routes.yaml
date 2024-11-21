@@ -5,4 +5,4 @@ controllers:
     type: attribute
 IDCIKeycloakSecurityBundle:
     resource: "@IDCIKeycloakSecurityBundle/Resources/config/routing.yaml"
-    prefix: /
+    prefix: /filemanager/

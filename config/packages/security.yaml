@@ -9,10 +9,8 @@ security:
 
         # This route create the OAuth 2 "User Authorization Request" and must be accessible for unauthenticated users
         auth_connect:
-            pattern: /auth/connect/keycloak
+            pattern: /filemanager/auth/connect/keycloak
             security: false
-
-
 
         # Here is an example to protect your application (UI) using OAuth 2 Authorization Code Flow
         secured_area:
@@ -29,5 +27,6 @@ security:
 
     access_control:
         # This following ROLES must be configured in your Keycloak client
+        - { path: ^/filemanager/auth, roles: PUBLIC_ACCESS }
         - { path: ^/filemanager/upload, roles: PUBLIC_ACCESS }
         - { path: ^/filemanager, roles: IS_AUTHENTICATED_FULLY }
