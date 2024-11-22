@@ -24,12 +24,6 @@ class AdminController extends AbstractController
         $this->filesystem = new Filesystem();
     }
 
-    #[Route('/', name: 'app_start')]
-    public function start(): Response
-    {
-        return $this->redirectToRoute('app_dashboard');
-    }
-
     #[Route('/filemanager', name: 'app_dashboard')]
     public function dashboard(): Response
     {
