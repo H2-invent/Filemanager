@@ -11,23 +11,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    
-      - name: Archive Release for application
-        uses: thedoctor0/zip-release@0.7.1
-        with:
-          type: 'zip'
-          filename: 'filemanager-${{ inputs.version }}.zip'
-          exclusions: '*.git* *.idea* *.github* /*var/* .editorconfig'
-          directory: .
-
       - name: Create new Release with semantic-version tag
         uses: ncipollo/release-action@v1
-        id: create_release
         with:
           draft: false
           prerelease: false
           name: Release ${{ inputs.version }}
           tag: ${{ inputs.version }}
-          artifacts: filemanager-${{ inputs.version }}.zip
-          artifactContentType: application/zip
           bodyFile: RELEASE_NOTE.md
