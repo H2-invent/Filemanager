@@ -52,12 +52,3 @@ jobs:
           push: true
           build-args: VERSION=${{ inputs.version }}
           tags: ${{ inputs.tags }}
-
-      - name: Create new Release with semantic-version tag
-        uses: ncipollo/release-action@v1
-        with:
-          draft: false
-          prerelease: false
-          name: Release ${{ inputs.version }}
-          tag: ${{ inputs.version }}
-          bodyFile: RELEASE_NOTE.md
