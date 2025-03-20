@@ -16,6 +16,7 @@ jobs:
         with:
           draft: false
           prerelease: false
+          allowUpdates: true
           name: Release ${{ inputs.version }}
           tag: ${{ inputs.version }}
           bodyFile: RELEASE_NOTE.md
