@@ -25,10 +25,3 @@ jobs:
     secrets:
       docker_password: ${{ secrets.DOCKER_REGISTRY_PASSWORD }}
       docker_username: ${{ secrets.DOCKER_REGISTRY_USERNAME }}
-
-  release:
-    needs:
-      - docker_image
-    uses: ./.github/workflows/task-release.yml
-    with:
-      version: ${{ needs.version.outputs.version_output }}
