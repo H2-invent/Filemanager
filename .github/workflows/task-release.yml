@@ -1,7 +1,12 @@
 name: Release Version
 
-on: workflow_call
-
+on:
+  workflow_call:
+    inputs:
+      version:
+        description: 'release version'
+        default: true
+        type: string
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -11,7 +16,7 @@ jobs:
         uses: thedoctor0/zip-release@0.7.1
         with:
           type: 'zip'
-          filename: 'filemanager-${{ steps.version.outputs.version }}.zip'
+          filename: 'filemanager-${{ inputs.version }}.zip'
           exclusions: '*.git* *.idea* *.github* /*var/* .editorconfig'
           directory: .
 
@@ -21,8 +26,8 @@ jobs:
         with:
           draft: false
           prerelease: false
-          name: Release ${{ steps.version.outputs.version }}
-          tag: ${{ steps.version.outputs.version }}
-          artifacts: filemanager-${{ steps.version.outputs.version }}.zip
+          name: Release ${{ inputs.version }}
+          tag: ${{ inputs.version }}
+          artifacts: filemanager-${{ inputs.version }}.zip
           artifactContentType: application/zip
           bodyFile: RELEASE_NOTE.md
