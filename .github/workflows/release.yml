@@ -23,31 +23,6 @@ jobs:
     with:
       version: ${{ needs.version.outputs.version_output }}
       prerelease: false
-  
-  build:
-    runs-on: ubuntu-latest
-    steps:
-
-        
-      - name: Archive Release for application
-        uses: thedoctor0/zip-release@0.7.1
-        with:
-          type: 'zip'
-          filename: 'filemanager-${{ steps.version.outputs.version }}.zip'
-          exclusions: '*.git* *.idea* *.github* /*var/* .editorconfig'
-          directory: .
-
-      - name: Create new Release with semantic-version tag
-        uses: ncipollo/release-action@v1
-        id: create_release
-        with:
-          draft: false
-          prerelease: false
-          name: Release ${{ steps.version.outputs.version }}
-          tag: ${{ steps.version.outputs.version }}
-          artifacts: filemanager-${{ steps.version.outputs.version }}.zip
-          artifactContentType: application/zip
-          bodyFile: RELEASE_NOTE.md
 
   docker_image:
     needs:
