@@ -11,9 +11,6 @@ COPY . /var/www/html
 
 USER root
 
-RUN npm install \
-    && npm run build
-
 RUN composer install --no-scripts
 
 RUN sed -i "s/^laF_version=.*/laF_version=${VERSION}/" .env
