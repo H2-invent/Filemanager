@@ -1,4 +1,12 @@
+name: Release Version
 
+on: workflow_call
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    
       - name: Archive Release for application
         uses: thedoctor0/zip-release@0.7.1
         with:
