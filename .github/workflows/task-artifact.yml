@@ -6,6 +6,17 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v3
+
+      - name: Update PHP Version and tools
+        uses: shivammathur/setup-php@v2
         with:
-          fetch-depth: 0
+          php-version: 8.3
+          ini-values: date.timezone ="Europe/Berlin"
+          extensions: gd,intl,mbstring
+
+      - name: Install dependencies
+        uses: php-actions/composer@v6
+        with:
+          dev: no
+          args: "--optimize-autoloader"
