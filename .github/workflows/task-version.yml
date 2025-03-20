@@ -32,7 +32,7 @@ jobs:
         id: create_release
         with:
           draft: false
-          prerelease: false
+          prerelease: true
           allowUpdates: true
           name: Release ${{ steps.version.outputs.version }}
           tag: ${{ steps.version.outputs.version }}
