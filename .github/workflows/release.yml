@@ -57,3 +57,17 @@ jobs:
           artifacts: filemanager-${{ steps.version.outputs.version }}.zip
           artifactContentType: application/zip
           bodyFile: RELEASE_NOTE.md
+
+  docker_image:
+    needs:
+      - version
+    uses: ./.github/workflows/task-docker.yml
+    with:
+      reponame: 'git.h2-invent.com/filemanager/application'
+      dockerfile_path: './Dockerfile'
+      directory: '.'
+      version: ${{ needs.version.outputs.version_output }}
+      tags: git.h2-invent.com/filemanager/application:${{ needs.version.outputs.version_output }},git.h2-invent.com/filemanager/application:latest
+    secrets:
+      docker_password: ${{ secrets.DOCKER_REGISTRY_PASSWORD }}
+      docker_username: ${{ secrets.DOCKER_REGISTRY_USERNAME }}
