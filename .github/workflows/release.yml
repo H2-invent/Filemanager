@@ -17,11 +17,11 @@ jobs:
       - version
     uses: ./.github/workflows/task-docker.yml
     with:
-      reponame: 'git.h2-invent.com/filemanager/application'
+      repository: reg.h2-invent.com
       dockerfile_path: './Dockerfile'
       directory: '.'
       version: ${{ needs.version.outputs.version_output }}
-      tags: git.h2-invent.com/filemanager/application:${{ needs.version.outputs.version_output }},git.h2-invent.com/filemanager/application:latest
+      tags: reg.h2-invent.com/filemanager/core:${{ needs.version.outputs.version_output }},reg.h2-invent.com/filemanager/core:latest
     secrets:
-      docker_password: ${{ secrets.DOCKER_REGISTRY_PASSWORD }}
-      docker_username: ${{ secrets.DOCKER_REGISTRY_USERNAME }}
+      docker_password: ${{ secrets.HARBOR_PUSH_PASSWORD }}
+      docker_username: ${{ secrets.HARBOR_PUSH_USERNAME }}
