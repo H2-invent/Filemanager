@@ -17,7 +17,7 @@ jobs:
       - version
     uses: ./.github/workflows/task-docker.yml
     with:
-      repository: reg.h2-invent.com
+      registry: reg.h2-invent.com
       dockerfile_path: './Dockerfile'
       directory: '.'
       version: ${{ needs.version.outputs.version_output }}
