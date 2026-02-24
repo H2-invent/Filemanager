@@ -10,26 +10,23 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
 class FileController extends AbstractController
 {
-    private AuthService $authService;
-
-    public function __construct(AuthService $authService)
+    public function __construct(private readonly AuthService $authService)
     {
-        $this->authService = $authService;
     }
 
     #[Route('/filemanager/upload', name: 'file_upload', methods: ['POST'])]
     public function uploadFile(
-        Request $request, 
-        EntityManagerInterface $entityManager, 
+        Request $request,
+        EntityManagerInterface $entityManager,
         SluggerInterface $slugger
     ): Response {
         $authHeader = $request->headers->get('Authorization');
-        
+
         $token = null;
         if ($authHeader && str_starts_with($authHeader, 'Bearer ')) {
             $token = substr($authHeader, 7); // Entfernt "Bearer " vom Anfang
@@ -50,16 +47,16 @@ class FileController extends AbstractController
             $fileName = $originalFilename . '.' . $fileContent->guessExtension();
             $fileContent->move($this->getParameter('upload_directory'), $newFilename);
 
-            $File = new File();
-            $File->setTitle($title);
-            $File->setDescription($description);
-            $File->setPermission($permission);
-            $File->setExpireAfter($expireAfter);
-            $File->setCreatedAt(new \DateTimeImmutable());
-            $File->setFileId($newFilename);
-            $File->setFileName($fileName);
+            $file = new File();
+            $file->setTitle($title);
+            $file->setDescription($description);
+            $file->setPermission($permission);
+            $file->setExpireAfter($expireAfter !== null ? (int) $expireAfter : null);
+            $file->setCreatedAt(new \DateTimeImmutable());
+            $file->setFileId($newFilename);
+            $file->setFileName($fileName);
 
-            $entityManager->persist($File);
+            $entityManager->persist($file);
             $entityManager->flush();
 
             return new Response('Datei erfolgreich hochgeladen und gespeichert!', Response::HTTP_OK);

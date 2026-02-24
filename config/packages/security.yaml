@@ -3,8 +3,8 @@ imports:
     - { resource: '@IDCIKeycloakSecurityBundle/Resources/config/security.yaml' }
 
 security:
+    # enable_authenticator_manager is removed in Symfony 7 - the new authenticator system is always active
 
-    enable_authenticator_manager: true
     firewalls:
 
         # This route create the OAuth 2 "User Authorization Request" and must be accessible for unauthenticated users
