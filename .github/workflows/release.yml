@@ -10,7 +10,21 @@ on:
 
 jobs:
   version:
-    uses: ./.github/workflows/task-version.yml
+    steps:
+      - name version
+        id: version
+        uses: h2-invent/action-compute-tag@v2.2.0
+
+      - name: Create new Release with semantic-version tag
+        uses: ncipollo/release-action@v1
+        id: create_release
+        with:
+          draft: false
+          prerelease: false
+          allowUpdates: true
+          name: Release ${{ steps.version.outputs.version }}
+          tag: ${{ steps.version.outputs.version }}
+          bodyFile: RELEASE_NOTE.md
 
   docker_image:
     needs:
@@ -25,3 +39,4 @@ jobs:
     secrets:
       docker_password: ${{ secrets.HARBOR_PUSH_PASSWORD }}
       docker_username: ${{ secrets.HARBOR_PUSH_USERNAME }}
+
