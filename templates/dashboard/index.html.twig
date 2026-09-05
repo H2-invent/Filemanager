@@ -1,19 +1,20 @@
 {% extends 'base.html.twig' %}
-{% block content %}
-    {% macro showValue(value) %}
-        {% if value is iterable %}
-            <ul class="list-group">
-                {% for v in value %}
-                    <li class="list-group-item">
-                        {{ _self.showValue(v) }}
-                    </li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            {{ value }}
-        {% endif %}
-    {% endmacro %}
 
+{% macro showValue(value) %}
+    {% if value is iterable %}
+        <ul class="list-group">
+            {% for v in value %}
+                <li class="list-group-item">
+                    {{ _self.showValue(v) }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        {{ value }}
+    {% endif %}
+{% endmacro %}
+
+{% block content %}
     <section class="mb-4">
         <div class="card">
             <div class="card-header text-center py-3">

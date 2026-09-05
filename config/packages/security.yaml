@@ -4,7 +4,6 @@ imports:
 
 security:
 
-    enable_authenticator_manager: true
     firewalls:
 
         # This route create the OAuth 2 "User Authorization Request" and must be accessible for unauthenticated users

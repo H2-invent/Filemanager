@@ -23,7 +23,7 @@ RUN tar \
     --exclude='./var/log' \
     -zcvf /artifact.tgz .
 
-FROM git.h2-invent.com/public-system-design/alpine-php8-cron-webserver:3.20.13
+FROM reg.h2-invent.com/public-system-design/debian-php84-cron-webserver:3.23.10
 ARG VERSION=development
 
 LABEL version="${VERSION}" \
@@ -39,18 +39,6 @@ LABEL version="${VERSION}" \
     org.opencontainers.image.url="https://h2-invent.com"
 
 USER root
-RUN apk --no-cache add \
-    unzip \
-    sqlite \
-    php83-sqlite3 \
-    php83-pdo_sqlite \
-    php83-ldap \
-    php83-xmlwriter \
-    php83-xsl \
-    php83-pcntl \
-    php83-posix \
-    php83-sockets \
-    && rm -rf /var/cache/apk/*
 
 RUN echo "Europe/Berlin" > /etc/timezone
 
@@ -59,7 +47,7 @@ RUN echo "# Docker Cron Jobs" > /var/crontab \
     && echo "TZ=Europe/Berlin" >> /var/crontab \
     && echo "0 * * * * /bin/sh /distributed_cron.sh '/var/www/html/data/cron_lock' 'php /var/www/html/bin/console app:file:expiration'" >> /var/crontab \
     && echo "" >> /var/crontab \
-    && chown nobody:nobody /var/crontab
+    && chown nobody:nogroup /var/crontab
 
 RUN echo "#!/bin/sh" > /docker-entrypoint-init.d/03-symfony.sh \
     && echo "php bin/console cache:clear" >> /docker-entrypoint-init.d/03-symfony.sh \
