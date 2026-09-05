@@ -10,47 +10,18 @@ on:
 
 jobs:
   version:
-    runs-on: ubuntu-latest
-    outputs:
-      version: ${{ steps.version.outputs.version }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Compute tag
-        id: version
-        uses: h2-invent/action-compute-tag@v2.2.0
-        with:
-          event-name: ${{ github.event_name }}
-          base-ref: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.branch || github.event.pull_request.base.ref }}
-          pr-action: ${{ github.event.action }}
-          pr-merged: ${{ github.event.pull_request.merged }}
-
-      - name: Create new Release with semantic-version tag
-        uses: ncipollo/release-action@v1
-        id: create_release
-        with:
-          draft: false
-          prerelease: false
-          allowUpdates: true
-          name: Release ${{ steps.version.outputs.version }}
-          tag: ${{ steps.version.outputs.version }}
-          bodyFile: RELEASE_NOTE.md
+    uses: ./.github/workflows/task-version.yml
 
   docker_image:
     needs:
       - version
     uses: ./.github/workflows/task-docker.yml
-    if: needs.version.outputs.skip != 'true'
     with:
       registry: reg.h2-invent.com
       dockerfile_path: './Dockerfile'
       directory: '.'
-      version: ${{ needs.version.outputs.version }}
-      tags: reg.h2-invent.com/filemanager/core:${{ needs.version.outputs.version }},reg.h2-invent.com/filemanager/core:latest
+      version: ${{ needs.version.outputs.version_output }}
+      tags: reg.h2-invent.com/filemanager/core:${{ needs.version.outputs.version_output }},reg.h2-invent.com/filemanager/core:latest
     secrets:
       docker_password: ${{ secrets.HARBOR_PUSH_PASSWORD }}
       docker_username: ${{ secrets.HARBOR_PUSH_USERNAME }}
-
