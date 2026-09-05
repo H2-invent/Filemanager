@@ -43,6 +43,7 @@ jobs:
     needs:
       - version
     uses: ./.github/workflows/task-docker.yml
+    if: needs.version.outputs.skip != 'true'
     with:
       registry: reg.h2-invent.com
       dockerfile_path: './Dockerfile'
