@@ -39,18 +39,6 @@ LABEL version="${VERSION}" \
     org.opencontainers.image.url="https://h2-invent.com"
 
 USER root
-RUN apk --no-cache add \
-    unzip \
-    sqlite \
-    php83-sqlite3 \
-    php83-pdo_sqlite \
-    php83-ldap \
-    php83-xmlwriter \
-    php83-xsl \
-    php83-pcntl \
-    php83-posix \
-    php83-sockets \
-    && rm -rf /var/cache/apk/*
 
 RUN echo "Europe/Berlin" > /etc/timezone
 
