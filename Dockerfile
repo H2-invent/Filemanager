@@ -47,7 +47,7 @@ RUN echo "# Docker Cron Jobs" > /var/crontab \
     && echo "TZ=Europe/Berlin" >> /var/crontab \
     && echo "0 * * * * /bin/sh /distributed_cron.sh '/var/www/html/data/cron_lock' 'php /var/www/html/bin/console app:file:expiration'" >> /var/crontab \
     && echo "" >> /var/crontab \
-    && chown nobody:nobody /var/crontab
+    && chown nobody:nogroup /var/crontab
 
 RUN echo "#!/bin/sh" > /docker-entrypoint-init.d/03-symfony.sh \
     && echo "php bin/console cache:clear" >> /docker-entrypoint-init.d/03-symfony.sh \
