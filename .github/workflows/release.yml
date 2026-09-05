@@ -10,9 +10,15 @@ on:
 
 jobs:
   version:
+    runs-on: ubuntu-latest
     outputs:
       version: ${{ steps.version.outputs.version }}
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
       - name: Compute tag
         id: version
         uses: h2-invent/action-compute-tag@v2.2.0
