@@ -23,7 +23,7 @@ RUN tar \
     --exclude='./var/log' \
     -zcvf /artifact.tgz .
 
-FROM git.h2-invent.com/public-system-design/alpine-php8-cron-webserver:3.20.13
+FROM reg.h2-invent.com/public-system-design/debian-php84-cron-webserver:3.23.10
 ARG VERSION=development
 
 LABEL version="${VERSION}" \
