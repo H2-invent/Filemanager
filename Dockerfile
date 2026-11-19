@@ -23,6 +23,7 @@ RUN tar \
     --exclude='./var/log' \
     -zcvf /artifact.tgz .
 
+# Fix NGINX und PHP CVE
 FROM reg.h2-invent.com/public-system-design/debian-php84-cron-webserver:4.0.2
 ARG VERSION=development
 
